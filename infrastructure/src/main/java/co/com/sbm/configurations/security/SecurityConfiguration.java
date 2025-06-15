@@ -31,14 +31,11 @@ import java.util.Map;
 @Configuration
 public class SecurityConfiguration {
 
-    private final UserDetailsService userDetailsService;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JWTAuthorizationFilter authorizationFilter;
 
-    public SecurityConfiguration(UserDetailsService userDetailsService,
-                                 JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
+    public SecurityConfiguration(JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
                                  JWTAuthorizationFilter authorizationFilter) {
-        this.userDetailsService = userDetailsService;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.authorizationFilter = authorizationFilter;
     }
