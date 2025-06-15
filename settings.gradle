@@ -1,0 +1,6 @@
+rootProject.name = 'sbm-users'
+
+include('domain')
+include('application')
+include('infrastructure')
+

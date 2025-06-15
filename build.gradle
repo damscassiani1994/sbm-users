@@ -1,0 +1,65 @@
+buildscript {
+    ext {
+        springBootVersion = '3.4.5'
+        lombokVersion = '1.18.36'
+    }
+}
+
+plugins {
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'java'
+}
+
+subprojects {
+
+    group = 'org.sbm'
+    version = '0.0.1'
+    sourceCompatibility = JavaVersion.VERSION_23
+
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java-library'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+        testImplementation 'org.assertj:assertj-core:3.17.2'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+        implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+
+        compileOnly "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor  "org.projectlombok:lombok:${lombokVersion}"
+        testCompileOnly  "org.projectlombok:lombok:${lombokVersion}"
+        testAnnotationProcessor  "org.projectlombok:lombok:${lombokVersion}"
+    }
+
+    configurations.configureEach {
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+        exclude group: "org.slf4j", module: "slf4j-log4j12"
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    ext.libs = [
+            unit_tests: [
+                    "junit:junit:4.12",
+                    "org.junit.jupiter:junit-jupiter-api:5.7.0",
+                    "junit:junit:4.12",
+                    "org.mockito:mockito-core:2.23.0",
+                    "org.assertj:assertj-core:3.3.0"
+            ],
+            spring_boot: [
+                    "org.springframework.boot:spring-boot-starter-actuator",
+                    "org.springframework.boot:spring-boot-starter-logging:${springBootVersion}",
+                    "org.springframework.boot:spring-boot-devtools:${springBootVersion}",
+                    "org.springframework.boot:spring-boot-starter:${springBootVersion}"
+            ]
+    ]
+
+}
