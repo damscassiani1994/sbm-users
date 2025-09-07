@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public sealed class User permits Employed, Client {
+    private String id;
     private String name;
     private String lastName;
     private String age;

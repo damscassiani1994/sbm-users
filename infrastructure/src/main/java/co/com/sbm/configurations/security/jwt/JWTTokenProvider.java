@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -62,10 +63,15 @@ public class JWTTokenProvider implements IJWTProvider {
     // validate JWT token
     @Override
     public boolean validateToken(String token){
-        Jwts.parser()
-                .verifyWith((SecretKey) getKey())
-                .build()
-                .parse(token);
+        try {
+            Jwts.parser()
+                    .verifyWith((SecretKey) getKey())
+                    .build()
+                    .parse(token);
+        } catch (SignatureException ex) {
+            System.out.println("Invalid JWT signature - " + ex.getMessage());
+            return false;
+        }
         return true;
     }
 

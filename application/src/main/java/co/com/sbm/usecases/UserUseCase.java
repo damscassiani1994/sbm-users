@@ -32,4 +32,9 @@ public class UserUseCase implements IUserUseCaseGateway {
     public User filterById(long userId) {
         return null;
     }
+
+    @Override
+    public User findByAuthentication(String token) {
+        return userGateway.findByAuthentication(token);
+    }
 }

@@ -9,4 +9,5 @@ public interface IUserGateway {
     void registerEmployer(Employed employer);
     String login(String username, String password);
     User filterById(long userId);
+    User findByAuthentication(String token);
 }

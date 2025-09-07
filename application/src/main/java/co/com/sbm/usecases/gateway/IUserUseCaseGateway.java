@@ -7,4 +7,5 @@ public interface IUserUseCaseGateway {
     <T> boolean register(T user, UserTypeEnum type);
     String login(String username, String password);
     User filterById(long userId);
+    User findByAuthentication(String token);
 }

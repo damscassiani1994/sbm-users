@@ -5,6 +5,7 @@ import co.com.sbm.configurations.security.interfaces.IJWTProvider;
 import co.com.sbm.drivenadapter.persistence.documents.AuthenticationDocument;
 import co.com.sbm.drivenadapter.persistence.documents.ClientDocument;
 import co.com.sbm.drivenadapter.persistence.documents.EmployerDocument;
+import co.com.sbm.drivenadapter.persistence.documents.UserDocument;
 import co.com.sbm.drivenadapter.persistence.repositories.IUserRepository;
 import co.com.sbm.usecases.gateway.IUserGateway;
 import co.com.sbm.model.user.Client;
@@ -79,5 +80,13 @@ public class UserAdapter implements IUserGateway {
     @Override
     public User filterById(long userId) {
         return null;
+    }
+
+    @Override
+    public User findByAuthentication(String token) {
+        String username = jwtProvider.getUsername(token);
+        UserDocument userDocument = userRepository.findByAuthenticationUserName(username);
+        userDocument.setAuthentication(null);
+        return modelMapper.map(userDocument, User.class);
     }
 }
